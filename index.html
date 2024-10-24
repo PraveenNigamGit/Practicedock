@@ -64,7 +64,9 @@
                     { "command": "docker start <container>", "description": "Starts a stopped container.", "example": "docker start mycontainer" },
                     { "command": "docker restart <container>", "description": "Restarts a running or stopped container.", "example": "docker restart mycontainer" },
                     { "command": "docker rm <container>", "description": "Removes a stopped container.", "example": "docker rm mycontainer" },
-                    { "command": "docker logs <container>", "description": "Displays logs from a specified container.", "example": "docker logs mycontainer" }
+                    { "command": "docker logs <container>", "description": "Displays logs from a specified container.", "example": "docker logs mycontainer" },
+                    { "command": "docker inspect <container>", "description": "Returns detailed information about a container." },
+                    { "command": "docker top <container>", "description": "Displays the running processes of a container." }
                 ],
                 "volume": [
                     { "command": "docker volume ls", "description": "Lists all Docker volumes." },
@@ -111,7 +113,9 @@
                     { "command": "docker swarm init", "description": "Initializes a new swarm." },
                     { "command": "docker swarm join", "description": "Joins a node to an existing swarm." },
                     { "command": "docker service create", "description": "Creates a new service in a swarm.", "example": "docker service create --name my_service nginx" },
-                    { "command": "docker stack deploy -c <file.yml> <stack_name>", "description": "Deploys a stack defined in a Docker Compose file in swarm mode.", "example": "docker stack deploy -c docker-compose.yml mystack" }
+                    { "command": "docker stack deploy -c <file.yml> <stack_name>", "description": "Deploys a stack defined in a Docker Compose file in swarm mode.", "example": "docker stack deploy -c docker-compose.yml mystack" },
+                    { "command": "docker service ls", "description": "Lists all services in the swarm." },
+                    { "command": "docker service rm <service>", "description": "Removes a service from the swarm.", "example": "docker service rm my_service" }
                 ],
                 "system": [
                     { "command": "docker system df", "description": "Displays disk usage by Docker." },
@@ -123,7 +127,10 @@
                     { "command": "docker commit <container> <new_image>", "description": "Creates a new image from a container's changes." },
                     { "command": "docker export <container> > <file.tar>", "description": "Exports a container’s filesystem as a tar archive." },
                     { "command": "docker import <file.tar>", "description": "Creates a new image from a tar archive of a filesystem." },
-                    { "command": "docker stats", "description": "Displays a live stream of container resource usage statistics." }
+                    { "command": "docker stats", "description": "Displays a live stream of container resource usage statistics." },
+                    { "command": "docker cp <container>:<path> <host_path>", "description": "Copies files/folders between a container and the local filesystem.", "example": "docker cp mycontainer:/app/file.txt ./file.txt" },
+                        { "command": "docker diff <container>", "description": "Inspects changes to files or directories on a container's filesystem.", "example": "docker diff mycontainer" },
+                    { "command": "docker update <options> <container>", "description": "Updates the configuration of an existing container.", "example": "docker update --memory 512m mycontainer" }
                 ]
             }
         };
@@ -143,8 +150,7 @@
                         commandDiv.classList.add('command');
                         commandDiv.innerHTML = `<strong>Command:</strong> ${cmd.command}<br>
                                                 <strong>Description:</strong> ${cmd.description}` +
-                                                (cmd.example ? `<br><strong>Example:</strong> <pre
-                                                <pre>${cmd.example}</pre>` : '');
+                                                (cmd.example ? `<br><strong>Example:</strong> <pre>${cmd.example}</pre>` : '');
                         section.appendChild(commandDiv);
                     });
                 } else if (typeof commands === 'object') {
